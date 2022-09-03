@@ -1,23 +1,23 @@
 package br.com.ifsc.aither.backend.controller;
 
+import br.com.ifsc.aither.backend.dto.RedDTO;
+import br.com.ifsc.aither.backend.service.RedService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/red")
 public class RedController {
 
-	@PostMapping("/create")
-	public String create() {
-		return "criado";
-	}
+	@Autowired
+	private RedService service;
 
-	@GetMapping("/read")
-	@PreAuthorize("hasAnyAuthority('ADMIN', 'PROFESSOR')")
-	public String read() {
-		return "read";
+	@PreAuthorize("!hasAuthority('NULL_ROLE')")
+	@PostMapping("/create")
+	public RedDTO create(@RequestBody @Valid RedDTO dto) {
+		return service.create(dto);
 	}
 }

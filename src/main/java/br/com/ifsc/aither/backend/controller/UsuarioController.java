@@ -4,8 +4,9 @@ import static java.util.Optional.ofNullable;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
+import br.com.ifsc.aither.backend.domain.usuario.Usuario;
+import br.com.ifsc.aither.backend.domain.usuario.UsuarioRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsc.aither.backend.component.TokenFactory;
-import br.com.ifsc.aither.backend.dto.UsuarioDTO;
 import br.com.ifsc.aither.backend.service.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +31,7 @@ public class UsuarioController {
 	private TokenFactory tokenFactory;
 
 	@PostMapping("/create")
-	public UsuarioDTO create(@RequestBody @Valid UsuarioDTO usuario) {
+	public Usuario create(@RequestBody UsuarioRegister usuario) {
 		return usuarioService.create(usuario);
 	}
 

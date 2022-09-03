@@ -1,4 +1,4 @@
-package br.com.ifsc.aither.backend.model.repository;
+package br.com.ifsc.aither.backend.repository;
 
 import java.util.Optional;
 

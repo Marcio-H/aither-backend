@@ -13,14 +13,12 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import br.com.ifsc.aither.backend.dto.UsuarioDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,10 +45,11 @@ public class UsuarioEntity implements Usuario {
 	@Column
 	private String nome;
 
-	public UsuarioEntity(UsuarioDTO dto) {
-		email = dto.getEmail();
-		senha = dto.getSenha();
-		nome = dto.getNome();
+	@Builder
+	private UsuarioEntity(String email, String senha, String nome) {
+		this.email = email;
+		this.senha = senha;
+		this.nome = nome;
 	}
 
 	@Override
@@ -86,5 +85,10 @@ public class UsuarioEntity implements Usuario {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String getNome() {
+		return nome;
 	}
 }

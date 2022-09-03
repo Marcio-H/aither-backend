@@ -26,17 +26,11 @@ CREATE TABLE red (
     criado_por INTEGER
 );
 
-CREATE TABLE conteudo_disciplina (
-      conteudo_id INTEGER,
-      disciplina_id INTEGER
-);
-
 /* PRIMARY KEYS */
 ALTER TABLE usuario ADD CONSTRAINT pk_usuario_id PRIMARY KEY (id);
 ALTER TABLE disciplina ADD CONSTRAINT pk_disciplina_id PRIMARY KEY (id);
 ALTER TABLE conteudo ADD CONSTRAINT pk_conteudo_id PRIMARY KEY (id);
 ALTER TABLE red ADD CONSTRAINT pk_red_id PRIMARY KEY (id);
-ALTER TABLE conteudo_disciplina ADD CONSTRAINT pk_conteudo_disciplina_conteudo_id_and_disciplina_id PRIMARY KEY (conteudo_id, disciplina_id);
 
 /* FOREIGN KEYS */
 ALTER TABLE red ADD CONSTRAINT fk_red_usuario FOREIGN KEY (criado_por) REFERENCES usuario(id);

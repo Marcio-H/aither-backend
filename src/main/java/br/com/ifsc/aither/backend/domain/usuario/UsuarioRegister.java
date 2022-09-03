@@ -1,32 +1,39 @@
 package br.com.ifsc.aither.backend.domain.usuario;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.Collection;
 import java.util.List;
 
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import lombok.Builder;
-
 @NoArgsConstructor
-public class UsuarioNull implements Usuario {
+@Setter
+public class UsuarioRegister implements Usuario {
 
-	private static final long serialVersionUID = 7237017405740556756L;
+	private String nome;
+	private String email;
+	private String senha;
+
+	@Override
+	public String getNome() {
+		return nome;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("NULL_ROLE"));
+		return List.of();
 	}
 
 	@Override
 	public String getPassword() {
-		return "NULL PASSWORD";
+		return senha;
 	}
 
 	@Override
 	public String getUsername() {
-		return "NULL USERNAME";
+		return email;
 	}
 
 	@Override
@@ -41,16 +48,11 @@ public class UsuarioNull implements Usuario {
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return false;
-	}
-
-	@Override
-	public String getNome() {
-		return "Usuário nulo";
+		return true;
 	}
 }

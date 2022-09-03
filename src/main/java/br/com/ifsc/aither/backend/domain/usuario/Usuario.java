@@ -4,4 +4,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface Usuario extends UserDetails {
 
+	public String getNome();
 }

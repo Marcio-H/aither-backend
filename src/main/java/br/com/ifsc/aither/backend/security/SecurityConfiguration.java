@@ -53,7 +53,7 @@ public class SecurityConfiguration {
 		var authenticationManager = authenticationConfiguration.getAuthenticationManager();
 		var customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager, tokenFactory);
 
-		customAuthenticationFilter.setFilterProcessesUrl("/api/login");
+		customAuthenticationFilter.setFilterProcessesUrl("/login");
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(tokenFactory, usuarioService), UsernamePasswordAuthenticationFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
