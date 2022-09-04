@@ -12,14 +12,14 @@ import lombok.Getter;
 public class Token {
 
 	@Getter
-	private final String email;
+	private final String username;
 
 	private final Environment env;
 
 	private final Long expiration;
 
-	private Token(String email, Environment environment, Long expiration) {
-		this.email = email;
+	private Token(String username, Environment environment, Long expiration) {
+		this.username = username;
 		this.env = environment;
 		this.expiration = expiration;
 	}
@@ -27,7 +27,7 @@ public class Token {
 	@Override
 	public String toString() {
 		return Jwts.builder()
-				.setSubject(email)
+				.setSubject(username)
 				.setExpiration(new Date(System.currentTimeMillis() +  expiration))
 				.signWith(SignatureAlgorithm.HS512, Optional.of(env.getProperty("app.token.secret")).get().getBytes())
 				.compact();
@@ -52,8 +52,8 @@ public class Token {
 				this.environment = environment;
 			}
 
-			public FromEmailBuilder fromEmail(String email) {
-				return new FromEmailBuilder(environment, email);
+			public FromUsernameBuilder fromUsername(String username) {
+				return new FromUsernameBuilder(environment, username);
 			}
 
 			public FromStringBuilder fromString(String str) {
@@ -61,22 +61,22 @@ public class Token {
 			}
 		}
 
-		public class FromEmailBuilder {
+		public class FromUsernameBuilder {
 
 			private final Environment environment;
-			private final String email;
+			private final String username;
 
-			private FromEmailBuilder(Environment environment, String email) {
+			private FromUsernameBuilder(Environment environment, String username) {
 				this.environment = environment;
-				this.email = email;
+				this.username = username;
 			}
 
 			public Token buildToken() {
-				return token(email, environment);
+				return token(username, environment);
 			}
 
 			public Token buildRefreshToken() {
-				return refreshToken(email, environment);
+				return refreshToken(username, environment);
 			}
 		}
 
@@ -91,14 +91,14 @@ public class Token {
 			}
 
 			public Token buildToken() {
-				return token(getEmail(), environment);
+				return token(getUsername(), environment);
 			}
 
 			public Token buildRefreshToken() {
-				return refreshToken(getEmail(), environment);
+				return refreshToken(getUsername(), environment);
 			}
 
-			private String getEmail() {
+			private String getUsername() {
 				return Jwts.parser()
 						.setSigningKey(Optional.of(environment.getProperty("app.token.secret")).get().getBytes())
 						.parseClaimsJws(str)
@@ -106,16 +106,16 @@ public class Token {
 			}
 		}
 
-		private static Token token(String email, Environment environment) {
+		private static Token token(String username, Environment environment) {
 			var expirationEnv = environment.getProperty("app.token.expiration", Long.class);
 
-			return new Token(email, environment, expirationEnv);
+			return new Token(username, environment, expirationEnv);
 		}
 
-		private static Token refreshToken(String email, Environment environment) {
+		private static Token refreshToken(String username, Environment environment) {
 			var expirationEnv =  environment.getProperty("app.token.refresh.expiration", Long.class);
 
-			return new Token(email, environment, expirationEnv);
+			return new Token(username, environment, expirationEnv);
 		}
 
 	}

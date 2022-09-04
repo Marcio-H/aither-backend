@@ -1,23 +1,17 @@
 package br.com.ifsc.aither.backend.controller;
 
-import static java.util.Optional.ofNullable;
+import br.com.ifsc.aither.backend.component.TokenFactory;
+import br.com.ifsc.aither.backend.domain.Usuario;
+import br.com.ifsc.aither.backend.service.UsuarioService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.ifsc.aither.backend.domain.usuario.Usuario;
-import br.com.ifsc.aither.backend.domain.usuario.UsuarioRegister;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import br.com.ifsc.aither.backend.component.TokenFactory;
-import br.com.ifsc.aither.backend.service.UsuarioService;
-import lombok.extern.slf4j.Slf4j;
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 @RestController
@@ -31,7 +25,7 @@ public class UsuarioController {
 	private TokenFactory tokenFactory;
 
 	@PostMapping("/create")
-	public Usuario create(@RequestBody UsuarioRegister usuario) {
+	public Usuario create(@RequestBody Usuario usuario) {
 		return usuarioService.create(usuario);
 	}
 
@@ -41,11 +35,11 @@ public class UsuarioController {
 			try {
 				var refreshTokenStr = authorization.replaceFirst("Bearer ", "");
 				var token = tokenFactory.tokenOf(refreshTokenStr);
-				var email = token.getEmail();
+				var username = token.getUsername();
 
-				log.info("Gerando novo token de acesso para o usuário '{}'", email);
+				log.info("Gerando novo token de acesso para o usuário '{}'", username);
 
-				var accessToken = tokenFactory.generateToken(email);
+				var accessToken = tokenFactory.generateToken(username);
 				response.setHeader("access_token", accessToken.toString());
 			} catch (Exception e) {
 				log.error("Aconteceu um erro na autorização", e);

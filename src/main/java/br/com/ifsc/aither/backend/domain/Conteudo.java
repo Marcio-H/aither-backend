@@ -1,14 +1,13 @@
 package br.com.ifsc.aither.backend.domain;
 
-import br.com.ifsc.aither.backend.dto.ConteudoDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+@ToString
 @Getter
 @Setter
 @Builder
@@ -25,27 +24,29 @@ public class Conteudo {
     @NotBlank(message = "Descrição é obrigatório")
     private String descricao;
 
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = "conteudo_disciplina",
             joinColumns = @JoinColumn(name = "conteudo_id"),
             inverseJoinColumns = @JoinColumn(name = "disciplina_id"))
-    @NotNull(message = "O campo disciplinas não pode ser nulo")
+    @NotEmpty(message = "O campo disciplinas não pode ser nulo")
     private Set<Disciplina> disciplinas;
-
-    public static Conteudo of(ConteudoDTO dto) {
-        var disciplinas = dto.getDisciplinas().stream()
-                .map(Disciplina::of)
-                .collect(Collectors.toSet());
-
-        return Conteudo.builder()
-                .id(dto.getId())
-                .descricao(dto.getDescricao())
-                .disciplinas(disciplinas)
-                .build();
-    }
 
     public Boolean possuiDisciplina(Disciplina disciplina) {
         return disciplinas.contains(disciplina);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) {
+            return true;
+        }
+        if (!(obj instanceof Conteudo)) {
+            return false;
+        }
+
+        Conteudo other = (Conteudo) obj;
+        return id != null && id.equals(other.getId());
     }
 }

@@ -1,6 +1,5 @@
 package br.com.ifsc.aither.backend.domain;
 
-import br.com.ifsc.aither.backend.dto.DisciplinaDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import static javax.persistence.FetchType.LAZY;
 
+@ToString
 @Getter
 @Setter
 @Builder
@@ -23,16 +23,22 @@ public class Disciplina {
     @Column
     private String descricao;
 
+    @ToString.Exclude
     @Column
     @Basic(fetch = LAZY, optional = false)
     @NotNull(message = "Imagem é obrigatório")
     private byte[] imagem;
 
-    public static Disciplina of(DisciplinaDTO dto) {
-        return Disciplina.builder()
-                .id(dto.getId())
-                .descricao(dto.getDescricao())
-                .imagem(dto.getImagem())
-                .build();
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) {
+            return true;
+        }
+        if (!(obj instanceof Disciplina)) {
+            return false;
+        }
+
+        Disciplina other = (Disciplina) obj;
+        return id != null && id.equals(other.getId());
     }
 }

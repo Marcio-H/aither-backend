@@ -12,17 +12,17 @@ public class TokenFactory {
 	@Autowired
 	private Environment env;
 
-	public Token generateToken(String email) {
+	public Token generateToken(String username) {
 		return Token.builder()
 				.withEnvironment(env)
-				.fromEmail(email)
+				.fromUsername(username)
 				.buildToken();
 	}
 
-	public Token generateRefreshToken(String email) {
+	public Token generateRefreshToken(String username) {
 		return Token.builder()
 				.withEnvironment(env)
-				.fromEmail(email)
+				.fromUsername(username)
 				.buildRefreshToken();
 	}
 

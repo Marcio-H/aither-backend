@@ -1,8 +1,6 @@
 package br.com.ifsc.aither.backend.controller;
 
 import br.com.ifsc.aither.backend.domain.Disciplina;
-import br.com.ifsc.aither.backend.dto.DisciplinaDTO;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Index;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,7 @@ class DisciplinaControllerTests extends BaseTests {
 	@Test
 	void criarTest() throws IOException {
 		var image = Paths.get("src/test/resources/img/calculator_math_school_tool_icon.png");
-		var dto = DisciplinaDTO.builder()
+		var dto = Disciplina.builder()
 				.descricao("DISCIPLINA TESTE")
 				.imagem(Files.readAllBytes(image))
 				.build();

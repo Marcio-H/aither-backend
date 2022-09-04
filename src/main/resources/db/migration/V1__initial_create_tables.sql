@@ -1,8 +1,9 @@
 CREATE TABLE usuario (
 	id SERIAL,
-	email VARCHAR(125) NOT NULL,
-	senha VARCHAR(125) NOT NULL,
-	nome VARCHAR(125) NOT NULL
+	username VARCHAR(125) NOT NULL,
+	password VARCHAR(125) NOT NULL,
+	name VARCHAR(125) NOT NULL,
+	enabled BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE disciplina (
@@ -22,13 +23,23 @@ CREATE TABLE red (
     descricao VARCHAR(1024) NOT NULL,
     autor VARCHAR(255),
     imagem BYTEA,
-    endereco VARCHAR(255),
-    criado_por INTEGER
+    endereco VARCHAR(255) NOT NULL,
+    criado_por INTEGER NOT NULL
 );
 
 CREATE TABLE conteudo_disciplina (
-      conteudo_id INTEGER,
-      disciplina_id INTEGER
+    conteudo_id INTEGER NOT NULL,
+    disciplina_id INTEGER NOT NULL
+);
+
+CREATE TABLE red_conteudo (
+    red_id INTEGER NOT NULL,
+    conteudo_id INTEGER NOT NULL
+);
+
+CREATE TABLE red_disciplina (
+    red_id INTEGER NOT NULL,
+    disciplina_id INTEGER NOT NULL
 );
 
 /* PRIMARY KEYS */
@@ -37,9 +48,17 @@ ALTER TABLE disciplina ADD CONSTRAINT pk_disciplina_id PRIMARY KEY (id);
 ALTER TABLE conteudo ADD CONSTRAINT pk_conteudo_id PRIMARY KEY (id);
 ALTER TABLE red ADD CONSTRAINT pk_red_id PRIMARY KEY (id);
 ALTER TABLE conteudo_disciplina ADD CONSTRAINT pk_conteudo_disciplina_conteudo_id_and_disciplina_id PRIMARY KEY (conteudo_id, disciplina_id);
+ALTER TABLE red_conteudo ADD CONSTRAINT pk_red_id_and_conteudo_id PRIMARY KEY (red_id, conteudo_id);
+ALTER TABLE red_disciplina ADD CONSTRAINT pk_red_id_and_disciplina_id PRIMARY KEY (red_id, disciplina_id);
 
 /* FOREIGN KEYS */
 ALTER TABLE red ADD CONSTRAINT fk_red_usuario FOREIGN KEY (criado_por) REFERENCES usuario(id);
+ALTER TABLE red_conteudo ADD CONSTRAINT fk_red_conteudo_red_id FOREIGN KEY (red_id) REFERENCES red(id);
+ALTER TABLE red_conteudo ADD CONSTRAINT fk_red_conteudo_conteudo_id FOREIGN KEY (conteudo_id) REFERENCES conteudo(id);
+ALTER TABLE red_disciplina ADD CONSTRAINT fk_red_disciplina_red_id FOREIGN KEY (red_id) REFERENCES red(id);
+ALTER TABLE red_disciplina ADD CONSTRAINT fk_red_disciplina_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id);
+ALTER TABLE conteudo_disciplina ADD CONSTRAINT fk_conteudo_disciplina_conteudo_id FOREIGN KEY (conteudo_id) REFERENCES conteudo(id);
+ALTER TABLE conteudo_disciplina ADD CONSTRAINT fk_conteudo_disciplina_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id);
 
 /* INDEXES */
-CREATE UNIQUE INDEX usuario_email_uidx ON usuario(email);
+CREATE UNIQUE INDEX usuario_email_uidx ON usuario(username);

@@ -1,6 +1,6 @@
 package br.com.ifsc.aither.backend.controller;
 
-import br.com.ifsc.aither.backend.dto.ConteudoDTO;
+import br.com.ifsc.aither.backend.domain.Conteudo;
 import br.com.ifsc.aither.backend.service.ConteudoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class ConteudoController {
 	private ConteudoService service;
 
 	@PostMapping("/create")
-	public ConteudoDTO create(@RequestBody @Valid ConteudoDTO dto) {
-		return service.create(dto);
+	public Conteudo create(@RequestBody @Valid Conteudo conteudo) {
+		return service.create(conteudo);
 	}
 }

@@ -28,23 +28,23 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("senha");
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 
-		log.info("Usuário: {} tentando tentando autenticação...", email);
+		log.info("Usuário: {} tentando autenticação...", username);
 		return authenticationManager.authenticate(authenticationToken);
 	}
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
-		String email = auth.getName();
-		Token accessToken = tokenFactory.generateToken(email);
-		Token refreshToken = tokenFactory.generateRefreshToken(email);
+		String username = auth.getName();
+		Token accessToken = tokenFactory.generateToken(username);
+		Token refreshToken = tokenFactory.generateRefreshToken(username);
 
 		response.setHeader("access_token", accessToken.toString());
 		response.setHeader("refresh_token", refreshToken.toString());
-		log.info("Usuário: {} se autenticou com sucesso!", email);
+		log.info("Usuário: {} se autenticou com sucesso!", username);
 	}
 }

@@ -1,8 +1,8 @@
 package br.com.ifsc.aither.backend.service;
 
-import br.com.ifsc.aither.backend.dto.DisciplinaDTO;
+import br.com.ifsc.aither.backend.domain.Disciplina;
 
 public interface DisciplinaService {
 
-	public DisciplinaDTO create(DisciplinaDTO dto);
+	Disciplina create(Disciplina disciplina);
 }

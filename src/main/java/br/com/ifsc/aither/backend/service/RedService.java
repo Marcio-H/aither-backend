@@ -1,8 +1,8 @@
 package br.com.ifsc.aither.backend.service;
 
-import br.com.ifsc.aither.backend.dto.RedDTO;
+import br.com.ifsc.aither.backend.domain.Red;
 
 public interface RedService {
 
-	public RedDTO create(RedDTO dto);
+	Red create(Red red);
 }

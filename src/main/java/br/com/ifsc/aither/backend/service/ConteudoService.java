@@ -1,8 +1,8 @@
 package br.com.ifsc.aither.backend.service;
 
-import br.com.ifsc.aither.backend.dto.ConteudoDTO;
+import br.com.ifsc.aither.backend.domain.Conteudo;
 
 public interface ConteudoService {
 
-	public ConteudoDTO create(ConteudoDTO dto);
+	Conteudo create(Conteudo conteudo);
 }

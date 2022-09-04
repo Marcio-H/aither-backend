@@ -1,6 +1,6 @@
 package br.com.ifsc.aither.backend.controller;
 
-import br.com.ifsc.aither.backend.dto.DisciplinaDTO;
+import br.com.ifsc.aither.backend.domain.Disciplina;
 import br.com.ifsc.aither.backend.service.DisciplinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,7 +16,7 @@ public class DisciplinaController {
 	private DisciplinaService service;
 
 	@PostMapping(value = "/create")
-	public DisciplinaDTO create(@ModelAttribute DisciplinaDTO dto) {
-		return service.create(dto);
+	public Disciplina create(@ModelAttribute Disciplina disciplina) {
+		return service.create(disciplina);
 	}
 }
