@@ -1,7 +1,7 @@
 INSERT INTO usuario
 (username, password, name)
 VALUES
-('marciojr.arc@hotmail.com', '$2a$10$GB5.CS8q.OIYDaG85nm7yeOQvNgFkCg/Zi84O0ChKsX2xBec/j5cq', 'Marcio');
+('marcio.tj@aluno.ifsc.edu.br', '$2a$10$GB5.CS8q.OIYDaG85nm7yeOQvNgFkCg/Zi84O0ChKsX2xBec/j5cq', 'Marcio T Jr');
 
 INSERT INTO disciplina
 (descricao, imagem)

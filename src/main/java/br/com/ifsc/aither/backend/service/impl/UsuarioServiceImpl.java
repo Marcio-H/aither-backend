@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioRepository repository;
 
 	@Override
 	public Usuario create(Usuario usuario) {
-		return usuarioRepository.save(usuario);
+		return repository.save(usuario);
 	}
 
 	@Override
 	public Usuario loadUserByUsername(String username) throws UsernameNotFoundException {
-		return usuarioRepository
+		return repository
 				.findByUsername(username)
 				.orElse(Usuario.usuarioNull());
 	}

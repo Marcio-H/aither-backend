@@ -117,6 +117,5 @@ public class Token {
 
 			return new Token(username, environment, expirationEnv);
 		}
-
 	}
 }

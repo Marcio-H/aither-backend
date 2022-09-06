@@ -1,5 +1,6 @@
-package br.com.ifsc.aither.backend.multipart;
+package br.com.ifsc.aither.backend.web;
 
+import br.com.ifsc.aither.backend.multipart.MultipartConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
