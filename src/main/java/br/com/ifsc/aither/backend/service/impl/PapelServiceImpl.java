@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class PapelServiceImpl implements PapelService {
 
@@ -17,5 +19,10 @@ public class PapelServiceImpl implements PapelService {
 	@Override
 	public Papel create(Papel papel) {
 		return repository.save(papel);
+	}
+
+	@Override
+	public Optional<Papel> findPapelByDescricao(String descricao) {
+		return repository.findPapelByDescricao(descricao);
 	}
 }

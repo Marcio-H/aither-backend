@@ -43,9 +43,7 @@ public class Red {
     @URL
     private String endereco;
 
-    @ToString.Exclude
     @ManyToOne
-    @NotNull(message = "Usuário é obrigatório")
     @JoinColumn(name = "criado_por")
     private Usuario criadoPor;
 

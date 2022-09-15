@@ -1,9 +1,7 @@
 package br.com.ifsc.aither.backend.domain;
 
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.Description;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,7 +10,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.iterable;
 
 class RedTests {
 

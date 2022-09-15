@@ -2,15 +2,12 @@ INSERT INTO papel (id, descricao)
 VALUES
 (1, 'ADMIN');
 
-INSERT INTO recurso_backend (id, descricao)
+INSERT INTO recurso (id, urn, tipo)
 VALUES
-(1, 'RED CREATE');
+(1, '/red/create', 'BACKEND'),
+(2, '/red', 'FRONTEND');
 
-INSERT INTO recurso_frontend (id, descricao)
+INSERT INTO autorizacao (papel_id, recurso_id)
 VALUES
-(1, 'RED VIEW');
-
-INSERT INTO papel_recurso (papel_id, recurso_id, tipo_recurso)
-VALUES
-(1, 1, 'B'),
-(1, 1, 'F');
+(1, 1),
+(1, 2);

@@ -3,7 +3,8 @@ CREATE TABLE usuario (
     username VARCHAR(125) NOT NULL,
     password VARCHAR(125) NOT NULL,
     name VARCHAR(125) NOT NULL,
-    enabled BOOLEAN DEFAULT TRUE
+    enabled BOOLEAN DEFAULT TRUE,
+    papel_id INTEGER NOT NULL
 );
 
 CREATE TABLE disciplina (
@@ -47,20 +48,20 @@ CREATE TABLE papel (
     descricao VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE recurso_backend (
+CREATE TABLE recurso (
     id SERIAL,
-    descricao VARCHAR(255) NOT NULL
+    label VARCHAR(255),
+    nome VARCHAR(255) NOT NULL,
+    dominio VARCHAR(9) NOT NULL,
+    uri VARCHAR(255) NOT NULL,
+    permite_todos BOOLEAN NOT NULL DEFAULT FALSE,
+    tipo VARCHAR(8) NOT NULL
 );
 
-CREATE TABLE recurso_frontend (
-    id SERIAL,
-    descricao VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE papel_recurso(
+CREATE TABLE autorizacao(
     papel_id INTEGER NOT NULL,
     recurso_id INTEGER NOT NULL,
-    tipo_recurso VARCHAR(5) NOT NULL
+    restrita BOOLEAN DEFAULT FALSE
 );
 
 /* PRIMARY KEYS */
@@ -72,9 +73,8 @@ ALTER TABLE conteudo_disciplina ADD CONSTRAINT pk_conteudo_disciplina_conteudo_i
 ALTER TABLE red_conteudo ADD CONSTRAINT pk_red_id_and_conteudo_id PRIMARY KEY (red_id, conteudo_id);
 ALTER TABLE red_disciplina ADD CONSTRAINT pk_red_id_and_disciplina_id PRIMARY KEY (red_id, disciplina_id);
 ALTER TABLE papel ADD CONSTRAINT pk_papel_id PRIMARY KEY (id);
-ALTER TABLE recurso_backend ADD CONSTRAINT pk_recurso_backend_id PRIMARY KEY (id);
-ALTER TABLE recurso_frontend ADD CONSTRAINT pk_recurso_frontend_id PRIMARY KEY (id);
-ALTER TABLE papel_recurso ADD CONSTRAINT pk_papel_recurso_papel_id_and_recurso_id_and_tipo_recurso PRIMARY KEY (papel_id, recurso_id, tipo_recurso);
+ALTER TABLE recurso ADD CONSTRAINT pk_recurso_backend_id PRIMARY KEY (id);
+ALTER TABLE autorizacao ADD CONSTRAINT pk_autorizacao_papel_id_and_recurso_id_and_tipo_recurso PRIMARY KEY (papel_id, recurso_id);
 
 /* FOREIGN KEYS */
 ALTER TABLE red ADD CONSTRAINT fk_red_criado_por FOREIGN KEY (criado_por) REFERENCES usuario(id);
@@ -84,7 +84,11 @@ ALTER TABLE red_disciplina ADD CONSTRAINT fk_red_disciplina_red_id FOREIGN KEY (
 ALTER TABLE red_disciplina ADD CONSTRAINT fk_red_disciplina_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id);
 ALTER TABLE conteudo_disciplina ADD CONSTRAINT fk_conteudo_disciplina_conteudo_id FOREIGN KEY (conteudo_id) REFERENCES conteudo(id);
 ALTER TABLE conteudo_disciplina ADD CONSTRAINT fk_conteudo_disciplina_disciplina_id FOREIGN KEY (disciplina_id) REFERENCES disciplina(id);
-ALTER TABLE papel_recurso ADD CONSTRAINT fk_papel_recurso_papel_id FOREIGN KEY (papel_id) REFERENCES papel(id);
+ALTER TABLE autorizacao ADD CONSTRAINT fk_autorizacao_papel_id FOREIGN KEY (papel_id) REFERENCES papel(id);
+ALTER TABLE autorizacao ADD CONSTRAINT fk_autorizacao_recurso_id FOREIGN KEY (recurso_id) REFERENCES recurso(id);
+ALTER TABLE usuario ADD CONSTRAINT fk_usuario_papel_id FOREIGN KEY (papel_id) REFERENCES papel(id);
 
 /* INDEXES */
 CREATE UNIQUE INDEX usuario_email_uidx ON usuario(username);
+CREATE UNIQUE INDEX recurso_url_uidx ON recurso(uri);
+CREATE UNIQUE INDEX papel_descricao ON papel(descricao);

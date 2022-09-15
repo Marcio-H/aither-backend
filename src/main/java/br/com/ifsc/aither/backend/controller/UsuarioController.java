@@ -40,6 +40,7 @@ public class UsuarioController {
 				log.info("Gerando novo token de acesso para o usuário '{}'", username);
 
 				var accessToken = tokenFactory.generateToken(username);
+
 				response.setHeader("access_token", accessToken.toString());
 			} catch (Exception e) {
 				log.error("Aconteceu um erro na autorização", e);

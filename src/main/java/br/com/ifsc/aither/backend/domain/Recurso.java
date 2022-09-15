@@ -1,17 +1,49 @@
 package br.com.ifsc.aither.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import br.com.ifsc.aither.backend.enums.DominioRecurso;
+import br.com.ifsc.aither.backend.enums.TipoRecurso;
+import lombok.*;
 
-@JsonTypeInfo(
-		use = JsonTypeInfo.Id.NAME,
-		property = "tipoRecurso"
-)
-@JsonSubTypes(
-		{
-				@JsonSubTypes.Type(value = RecursoBackend.class, name = "B"),
-				@JsonSubTypes.Type(value = RecursoFrontend.class, name = "F")
-		}
-)
-public interface Recurso {
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@ToString
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table
+public class Recurso {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column
+	private String label;
+
+	@Column
+	@NotBlank(message = "Nome é obrigatório")
+	private String nome;
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column
+	private DominioRecurso dominio;
+
+	@NotBlank(message = "URN é obrigatório")
+	@Column
+	private String uri;
+
+	@Builder.Default
+	@Column(name = "permite_todos")
+	private boolean permiteTodos = false;
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column
+	private TipoRecurso tipo;
 }

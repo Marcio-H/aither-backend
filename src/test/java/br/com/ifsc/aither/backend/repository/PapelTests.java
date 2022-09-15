@@ -1,9 +1,7 @@
 package br.com.ifsc.aither.backend.repository;
 
-import br.com.ifsc.aither.backend.domain.Papel;
-import br.com.ifsc.aither.backend.domain.Recurso;
-import br.com.ifsc.aither.backend.domain.RecursoBackend;
-import br.com.ifsc.aither.backend.domain.RecursoFrontend;
+import br.com.ifsc.aither.backend.domain.*;
+import br.com.ifsc.aither.backend.enums.TipoRecurso;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +20,24 @@ class PapelTests extends BaseTests {
 	private PapelRepository papelRepository;
 
 	@Autowired
-	private RecursoBackendRepository recursoBackendRepository;
-
-	@Autowired
-	private RecursoFrontendRepository recursoFrontendRepository;
+	private RecursoRepository recursoRepository;
 
 	@Test
 	void createTest() {
-		RecursoBackend backend = RecursoBackend.builder()
-				.descricao("Recurso back")
-				.build();
-		RecursoFrontend front = RecursoFrontend.builder()
-				.descricao("Recruso front")
+		Recurso recurso = Recurso.builder()
+				.urn("/red/create")
+				.tipo(TipoRecurso.BACKEND)
 				.build();
 
-		backend = recursoBackendRepository.save(backend);
-		front = recursoFrontendRepository.save(front);
+		recurso = recursoRepository.save(recurso);
 
+		AutorizacaoId autorizacaoId= AutorizacaoId.builder().recurso(recurso).build();
+		Autorizacao autorizacao = Autorizacao.builder()
+				.id(autorizacaoId)
+				.build();
 		Papel papel = Papel.builder()
 				.descricao("Papel")
-				.recursos(Set.of(backend, front))
+				.autorizacaos(Set.of(autorizacao))
 				.build();
 
 		papelRepository.save(papel);
@@ -54,7 +50,7 @@ class PapelTests extends BaseTests {
 
 		assertThat(papel).isNotNull()
 				.get()
-				.extracting(Papel::getRecursos, as(InstanceOfAssertFactories.collection(Recurso.class)))
+				.extracting(Papel::getAutorizacaos, as(InstanceOfAssertFactories.collection(Autorizacao.class)))
 				.hasSize(2);
 	}
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.ifsc.aither.backend.service.UsuarioService;
@@ -38,6 +39,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 		try {
 			username = extractUsernameFrom(request);
 		} catch (ExpiredJwtException e) {
+			log.error("Extração falhou...");
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		} catch (Exception e) {
@@ -45,6 +47,14 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 		}
 
 		var usuario = usuarioService.loadUserByUsername(username);
+		var uri = request.getRequestURI().replaceFirst("/api", "").toString();
+
+		if (!usuario.possuiAcessoPara(uri)) {
+			log.error("Usuario '{}' não possui acesso para o recurso '{}'", usuario.getUsername(), uri);
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+
 		var authenticationToken = new UsernamePasswordAuthenticationToken(
 				usuario.getUsername(),
 				usuario.getPassword(),
@@ -63,6 +73,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 			return "";
 		}
 
+		log.info("Extraindo username do token '{}'", authorizationHeader);
 		var tokenStr = authorizationHeader.replaceFirst("Bearer ", "");
 		var token = tokenFactory.tokenOf(tokenStr);
 

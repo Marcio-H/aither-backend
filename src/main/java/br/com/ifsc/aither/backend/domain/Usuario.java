@@ -1,7 +1,9 @@
 package br.com.ifsc.aither.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -42,6 +44,10 @@ public class Usuario implements UserDetails {
 	@Column
 	private String name;
 
+	@NotNull(message = "papel é obrigatório")
+	@ManyToOne
+	private Papel papel;
+
 	@Builder.Default
 	@Column
 	private boolean enabled = true;
@@ -50,9 +56,10 @@ public class Usuario implements UserDetails {
 		this.password = encode(password);
 	}
 
+	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of();
+		return List.of(new SimpleGrantedAuthority(papel.getDescricao()));
 	}
 
 	@Override
@@ -70,13 +77,8 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	public static Usuario usuarioNull() {
-		return Usuario.builder()
-				.id(-1)
-				.name("USUÁRIO NULO")
-				.username("usuario.nulo@nulo.com")
-				.password("SENHA NULA")
-				.build();
+	public boolean possuiAcessoPara(String uri) {
+		return papel.possuiAcessoPara(uri);
 	}
 
 	public static class UsuarioBuilder {
@@ -92,7 +94,7 @@ public class Usuario implements UserDetails {
 		if (super.equals(obj)) {
 			return true;
 		}
-		if (!(obj instanceof Red)) {
+		if (!(obj instanceof Usuario)) {
 			return false;
 		}
 
