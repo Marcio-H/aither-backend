@@ -52,8 +52,8 @@ CREATE TABLE recurso (
     id SERIAL,
     label VARCHAR(255),
     nome VARCHAR(255) NOT NULL,
-    dominio VARCHAR(9) NOT NULL,
-    urn VARCHAR(255) NOT NULL,
+    dominio VARCHAR(9),
+    uri VARCHAR(255) NOT NULL,
     permite_todos BOOLEAN NOT NULL DEFAULT FALSE,
     tipo VARCHAR(8) NOT NULL
 );
@@ -90,4 +90,5 @@ ALTER TABLE usuario ADD CONSTRAINT fk_usuario_papel_id FOREIGN KEY (papel_id) RE
 
 /* INDEXES */
 CREATE UNIQUE INDEX usuario_email_uidx ON usuario(username);
-CREATE UNIQUE INDEX recurso_urn_uidx ON recurso(urn);
+CREATE UNIQUE INDEX recurso_url_uidx ON recurso(uri);
+CREATE UNIQUE INDEX papel_descricao ON papel(descricao);

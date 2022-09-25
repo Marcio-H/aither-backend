@@ -1,20 +1,21 @@
 package br.com.ifsc.aither.backend.component;
 
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.com.ifsc.aither.backend.domain.Autorizacao;
 import br.com.ifsc.aither.backend.domain.AutorizacaoId;
 import br.com.ifsc.aither.backend.domain.Papel;
 import br.com.ifsc.aither.backend.domain.Usuario;
-import br.com.ifsc.aither.backend.repository.RecursoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
+import br.com.ifsc.aither.backend.service.RecursoService;
 
 @Component
 public class UsuarioFactory {
 
 	@Autowired
-	private RecursoRepository recursoRepository;
+	private RecursoService recursoService;
 
 	public Usuario usuarioNull() {
 		return Usuario.builder()
@@ -27,7 +28,7 @@ public class UsuarioFactory {
 	}
 
 	private Papel papelNull() {
-		var recursosPublicos = recursoRepository.findAllByPermiteTodosIsTrue();
+		var recursosPublicos = recursoService.findAllByPermiteTodosIsTrue();
 		var autorizacoes = recursosPublicos.stream()
 				.map(it -> AutorizacaoId.builder()
 						.recurso(it)

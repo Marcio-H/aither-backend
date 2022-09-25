@@ -19,24 +19,10 @@ public class TokenFactory {
 				.buildToken();
 	}
 
-	public Token generateRefreshToken(String username) {
-		return Token.builder()
-				.withEnvironment(env)
-				.fromUsername(username)
-				.buildRefreshToken();
-	}
-
 	public Token tokenOf(String token) {
 		return Token.builder()
 				.withEnvironment(env)
 				.fromString(token)
 				.buildToken();
-	}
-
-	public Token refreshTokenOf(String token) {
-		return Token.builder()
-				.withEnvironment(env)
-				.fromString(token)
-				.buildRefreshToken();
 	}
 }

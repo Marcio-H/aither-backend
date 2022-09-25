@@ -52,7 +52,7 @@ CREATE TABLE recurso (
     id SERIAL,
     label VARCHAR(255),
     nome VARCHAR(255) NOT NULL,
-    dominio VARCHAR(9) NOT NULL,
+    dominio VARCHAR(9),
     uri VARCHAR(255) NOT NULL,
     permite_todos BOOLEAN NOT NULL DEFAULT FALSE,
     tipo VARCHAR(8) NOT NULL

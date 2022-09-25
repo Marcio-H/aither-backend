@@ -29,7 +29,6 @@ public class Recurso {
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column
 	private DominioRecurso dominio;
@@ -46,4 +45,13 @@ public class Recurso {
 	@Enumerated(EnumType.STRING)
 	@Column
 	private TipoRecurso tipo;
+	
+	public static Recurso recursoNull() {
+		return Recurso.builder()
+				.id(-1)
+				.nome("null")
+				.uri("/null")
+				.tipo(TipoRecurso.BACKEND)
+				.build();
+	}
 }

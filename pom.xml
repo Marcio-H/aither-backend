@@ -14,7 +14,6 @@
 	<name>aither-backend</name>
 	<description>Aither back-end</description>
 	<properties>
-		<querydsl.version>5.0.0</querydsl.version>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
@@ -64,18 +63,15 @@
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-core</artifactId>
-			<version>${querydsl.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
-			<version>${querydsl.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
-			<version>${querydsl.version}</version>
 		</dependency>
 
 		<dependency>

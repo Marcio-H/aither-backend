@@ -1,21 +1,23 @@
 package br.com.ifsc.aither.backend.controller;
 
-import br.com.ifsc.aither.backend.domain.Disciplina;
-import org.assertj.core.data.Index;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import javax.inject.Inject;
+
+import org.assertj.core.data.Index;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import br.com.ifsc.aither.backend.domain.Disciplina;
 
 @SpringJUnitConfig(BaseTests.TestConfig.class)
 class DisciplinaControllerTests extends BaseTests {
 
-	@Autowired
+	@Inject
 	private DisciplinaController controller;
 
 	@Test
