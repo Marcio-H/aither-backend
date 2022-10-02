@@ -1,8 +1,17 @@
 package br.com.ifsc.aither.backend.service;
 
-import br.com.ifsc.aither.backend.domain.Disciplina;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import br.com.ifsc.aither.backend.autocomplete.DisciplinaAutoComplete;
+import br.com.ifsc.aither.backend.model.DisciplinaDTO;
 
 public interface DisciplinaService {
 
-	Disciplina create(Disciplina disciplina);
+	DisciplinaDTO create(DisciplinaDTO disciplinaDTO);
+	DisciplinaDTO read(Integer id);
+	DisciplinaDTO update(DisciplinaDTO disciplinaDTO);
+	void delete(Integer id);
+	Page<DisciplinaDTO> listAsDTO(Pageable pageable);
+	Page<DisciplinaAutoComplete> autoComplete(String query, Pageable pageable);
 }

@@ -1,35 +1,28 @@
 package br.com.ifsc.aither.backend.component;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-
 import javax.inject.Inject;
 
-@Component(SpringContext.NAME)
-@Order(value = Ordered.HIGHEST_PRECEDENCE)
-@Lazy(value = false)
-public class SpringContext {
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-	public static final String NAME = "springContext";
-
-	private static ApplicationContext applicationContext;
-	private static Environment environment;
+@Component
+public class SpringContext implements ApplicationContextAware {
 
 	@Inject
-	public SpringContext(ApplicationContext applicationContext, Environment environment) {
+	private static ApplicationContext applicationContext;
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		SpringContext.setApplicationContextStatic(applicationContext);
+	}
+
+	public static <T> T getBean(Class<T> clazz) {
+		return applicationContext.getBean(clazz);
+	}
+
+	private static void setApplicationContextStatic(ApplicationContext applicationContext) {
 		SpringContext.applicationContext = applicationContext;
-		SpringContext.environment = environment;
-	}
-
-	public static ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
-
-	public static Environment getEnvironment() {
-		return environment;
 	}
 }

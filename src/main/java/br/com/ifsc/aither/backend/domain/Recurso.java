@@ -1,57 +1,41 @@
 package br.com.ifsc.aither.backend.domain;
 
-import br.com.ifsc.aither.backend.enums.DominioRecurso;
-import br.com.ifsc.aither.backend.enums.TipoRecurso;
-import lombok.*;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-@ToString
-@Getter
-@Setter
+import org.hibernate.annotations.TypeDef;
+
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Recurso {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column
-	private String label;
-
-	@Column
-	@NotBlank(message = "Nome é obrigatório")
-	private String nome;
-
-	@Enumerated(EnumType.STRING)
-	@Column
-	private DominioRecurso dominio;
-
 	@NotBlank(message = "URN é obrigatório")
 	@Column
-	private String uri;
+	private String urn;
 
-	@Builder.Default
-	@Column(name = "permite_todos")
-	private boolean permiteTodos = false;
-
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column
-	private TipoRecurso tipo;
-	
 	public static Recurso recursoNull() {
 		return Recurso.builder()
 				.id(-1)
-				.nome("null")
-				.uri("/null")
-				.tipo(TipoRecurso.BACKEND)
+				.urn("/null")
 				.build();
 	}
 }

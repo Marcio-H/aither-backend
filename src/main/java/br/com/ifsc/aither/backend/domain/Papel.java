@@ -1,19 +1,30 @@
 package br.com.ifsc.aither.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import static java.util.Objects.isNull;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.FetchType.EAGER;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import br.com.ifsc.aither.backend.enums.DominioRecurso;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @ToString
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Papel {
@@ -30,12 +41,32 @@ public class Papel {
 	@Column
 	private String descricao;
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = EAGER)
-	@JoinColumn(name = "papel_id")
-	private Set<Autorizacao> autorizacaos = Set.of();
+	@NotNull
+	@OneToMany(mappedBy = "papel", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Autorizacao> autorizacaos = new HashSet<>();
 
-	public boolean possuiAcessoPara(String uri) {
-		return autorizacaos.stream().anyMatch(it -> it.possuiAcessoPara(uri));
+	@Builder
+	public Papel(Integer id, String descricao, Set<Autorizacao> autorizacaos) {
+		this.id = id;
+		this.descricao = descricao;
+		if (isNull(autorizacaos)) {
+			autorizacaos = Set.of();
+		}
+		autorizacaos.forEach(this::adicionarAutorizacao);
+	}
+
+	public static Papel papelNull() {
+		return Papel.builder()
+				.descricao("PAPEL NULL")
+				.build();
+	}
+
+	public void adicionarAutorizacao(Autorizacao autorizacao) {
+		autorizacao.setPapel(this);
+		this.autorizacaos.add(autorizacao);
+	}
+
+	public boolean possuiAcessoPara(String urn, DominioRecurso domain) {
+		return autorizacaos.stream().anyMatch(it -> it.possuiAcessoPara(urn, domain));
 	}
 }

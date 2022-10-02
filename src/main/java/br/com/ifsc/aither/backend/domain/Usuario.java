@@ -1,6 +1,8 @@
 package br.com.ifsc.aither.backend.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.ifsc.aither.backend.enums.DominioRecurso;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -77,8 +79,8 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	public boolean possuiAcessoPara(String uri) {
-		return papel.possuiAcessoPara(uri);
+	public boolean possuiAcessoPara(String urn, DominioRecurso domain) {
+		return papel.possuiAcessoPara(urn, domain);
 	}
 
 	public static class UsuarioBuilder {
@@ -87,6 +89,16 @@ public class Usuario implements UserDetails {
 			this.password = encode(password);
 			return this;
 		}
+	}
+
+	public static Usuario usuarioNull() {
+		return Usuario.builder()
+				.id(-1)
+				.name("USUÁRIO NULO")
+				.username("usuario.nulo@nulo.com")
+				.password("SENHA NULA")
+				.papel(Papel.papelNull())
+				.build();
 	}
 
 	@Override

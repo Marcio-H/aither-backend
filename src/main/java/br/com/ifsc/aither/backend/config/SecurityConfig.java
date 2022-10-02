@@ -1,16 +1,13 @@
 package br.com.ifsc.aither.backend.config;
 
-import br.com.ifsc.aither.backend.component.CustomAuthenticationFilter;
-import br.com.ifsc.aither.backend.component.CustomAuthorizationFilter;
-import br.com.ifsc.aither.backend.component.TokenFactory;
-import br.com.ifsc.aither.backend.service.RecursoService;
-import br.com.ifsc.aither.backend.service.UsuarioService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,17 +18,21 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
+import br.com.ifsc.aither.backend.component.CustomAuthenticationFilter;
+import br.com.ifsc.aither.backend.component.CustomAuthorizationFilter;
+import br.com.ifsc.aither.backend.component.TokenFactory;
+import br.com.ifsc.aither.backend.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
 	private final UsuarioService usuarioService;
 	private final TokenFactory tokenFactory;
 	private final AuthenticationConfiguration authenticationConfiguration;
-	private final RecursoService recursoService;
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -54,7 +55,7 @@ public class SecurityConfig {
 
 		customAuthenticationFilter.setFilterProcessesUrl("/login");
 		http.addFilter(customAuthenticationFilter);
-		http.addFilterBefore(new CustomAuthorizationFilter(tokenFactory, usuarioService, recursoService), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(new CustomAuthorizationFilter(tokenFactory, usuarioService), UsernamePasswordAuthenticationFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		return http.build();
 	}

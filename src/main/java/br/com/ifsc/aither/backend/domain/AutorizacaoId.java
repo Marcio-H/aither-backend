@@ -1,25 +1,18 @@
 package br.com.ifsc.aither.backend.domain;
 
-import lombok.*;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-@ToString
-@Getter
-@Setter
-@Builder
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class AutorizacaoId implements Serializable {
 
-	@ToString.Exclude
-	@ManyToOne
-	@JoinColumn(name = "papel_id")
-	private Papel papel;
+	private static final long serialVersionUID = -6574000723482895847L;
 
-	@ManyToOne
-	@JoinColumn( name = "recurso_id")
+	private Papel papel;
 	private Recurso recurso;
 }
