@@ -1,4 +1,4 @@
-package br.com.ifsc.aither.backend.multipart;
+package br.com.ifsc.aither.backend.utils;
 
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;

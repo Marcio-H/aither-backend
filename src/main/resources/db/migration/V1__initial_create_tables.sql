@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS unaccent schema public;
+
 CREATE TABLE usuario (
     id SERIAL,
     username VARCHAR(125) NOT NULL,
@@ -50,18 +52,14 @@ CREATE TABLE papel (
 
 CREATE TABLE recurso (
     id SERIAL,
-    label VARCHAR(255),
-    nome VARCHAR(255) NOT NULL,
-    dominio VARCHAR(9),
-    uri VARCHAR(255) NOT NULL,
-    permite_todos BOOLEAN NOT NULL DEFAULT FALSE,
-    tipo VARCHAR(8) NOT NULL
+    urn VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE autorizacao(
     papel_id INTEGER NOT NULL,
     recurso_id INTEGER NOT NULL,
-    restrita BOOLEAN DEFAULT FALSE
+    restrita BOOLEAN DEFAULT FALSE,
+    dominios TEXT[] NOT NULL
 );
 
 /* PRIMARY KEYS */
@@ -90,5 +88,5 @@ ALTER TABLE usuario ADD CONSTRAINT fk_usuario_papel_id FOREIGN KEY (papel_id) RE
 
 /* INDEXES */
 CREATE UNIQUE INDEX usuario_email_uidx ON usuario(username);
-CREATE UNIQUE INDEX recurso_url_uidx ON recurso(uri);
+CREATE UNIQUE INDEX recurso_url_uidx ON recurso(urn);
 CREATE UNIQUE INDEX papel_descricao ON papel(descricao);
