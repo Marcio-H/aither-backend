@@ -57,8 +57,8 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 
 	@Transactional
 	@Override
-	public Page<DisciplinaDTO> listAsDTO(Pageable pageable) {
-		var page = repository.findAll(pageable);
+	public Page<DisciplinaDTO> listAsDTO(String query, Pageable pageable) {
+		var page = repository.findAll(query, pageable);
 
 		return page.map(mapper::convertDomainToDto);
 	}

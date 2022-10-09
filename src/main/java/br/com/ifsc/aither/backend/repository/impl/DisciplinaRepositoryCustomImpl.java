@@ -17,6 +17,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import br.com.ifsc.aither.backend.autocomplete.DisciplinaAutoComplete;
 import br.com.ifsc.aither.backend.autocomplete.impl.DisciplinaAutoCompleteImpl;
+import br.com.ifsc.aither.backend.domain.Disciplina;
 import br.com.ifsc.aither.backend.domain.QDisciplina;
 import br.com.ifsc.aither.backend.repository.DisciplinaRepositoryCustom;
 
@@ -41,6 +42,21 @@ public class DisciplinaRepositoryCustomImpl implements DisciplinaRepositoryCusto
 		var jpaQuery = (JPAQuery<DisciplinaAutoComplete>) jpaQueryFactory
 				.select(bean)
 				.from(QDOMAIN)
+				.where(predicate)
+				.orderBy(QDOMAIN.id.asc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize());
+		var content = jpaQuery.fetch();
+
+		return new PageImpl<>(content);
+	}
+
+	@Override
+	public Page<Disciplina> findAll(String query, Pageable pageable) {
+		var jpaQueryFactory = new JPAQueryFactory(em);
+		var predicate = buildContextFilter(query);
+		var jpaQuery = jpaQueryFactory
+				.selectFrom(QDOMAIN)
 				.where(predicate)
 				.orderBy(QDOMAIN.id.asc())
 				.offset(pageable.getOffset())

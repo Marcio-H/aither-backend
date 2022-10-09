@@ -68,8 +68,8 @@ public class DisciplinaController {
 	}
 
 	@GetMapping
-	public Page<DisciplinaDTO> list(Pageable pageable) {
-		return service.listAsDTO(pageable);
+	public Page<DisciplinaDTO> list(String query, Pageable pageable) {
+		return service.listAsDTO(query, pageable);
 	}
 
 	@GetMapping("/autoComplete")

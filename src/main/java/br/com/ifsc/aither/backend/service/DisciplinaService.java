@@ -12,6 +12,6 @@ public interface DisciplinaService {
 	DisciplinaDTO read(Integer id);
 	DisciplinaDTO update(DisciplinaDTO disciplinaDTO);
 	void delete(Integer id);
-	Page<DisciplinaDTO> listAsDTO(Pageable pageable);
+	Page<DisciplinaDTO> listAsDTO(String query, Pageable pageable);
 	Page<DisciplinaAutoComplete> autoComplete(String query, Pageable pageable);
 }
