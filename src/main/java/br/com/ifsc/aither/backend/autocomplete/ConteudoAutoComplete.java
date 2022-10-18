@@ -3,11 +3,11 @@ package br.com.ifsc.aither.backend.autocomplete;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import br.com.ifsc.aither.backend.autocomplete.impl.DisciplinaAutoCompleteImpl;
+import br.com.ifsc.aither.backend.autocomplete.impl.ConteudoAutoCompleteImpl;
 
-@JsonSerialize(as = DisciplinaAutoCompleteImpl.class)
-@JsonDeserialize(as = DisciplinaAutoCompleteImpl.class)
-public interface DisciplinaAutoComplete {
+@JsonSerialize(as = ConteudoAutoCompleteImpl.class)
+@JsonDeserialize(as = ConteudoAutoCompleteImpl.class)
+public interface ConteudoAutoComplete {
 
 	Integer getId();
 

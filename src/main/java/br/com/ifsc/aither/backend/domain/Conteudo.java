@@ -1,15 +1,25 @@
 package br.com.ifsc.aither.backend.domain;
 
-import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-@ToString
-@Getter
-@Setter
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,5 +58,10 @@ public class Conteudo {
 
         Conteudo other = (Conteudo) obj;
         return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+    	return super.hashCode();
     }
 }

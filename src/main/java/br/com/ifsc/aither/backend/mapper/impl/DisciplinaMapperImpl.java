@@ -17,8 +17,8 @@ public class DisciplinaMapperImpl implements DisciplinaMapper {
 	private ObjectMapper mapper;
 
 	@Override
-	public DisciplinaDTO convertDomainToDto(Disciplina entity) {
-		return mapper.convertValue(entity, DisciplinaDTO.class);
+	public DisciplinaDTO convertDomainToDto(Disciplina domain) {
+		return mapper.convertValue(domain, DisciplinaDTO.class);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package br.com.ifsc.aither.backend.component;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import br.com.ifsc.aither.backend.domain.Token;
 @Component
 public class TokenFactory {
 
-	@Autowired
+	@Inject
 	private Environment env;
 
 	public Token generateToken(String username) {

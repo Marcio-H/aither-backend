@@ -1,6 +1,6 @@
 package br.com.ifsc.aither.backend.autocomplete.impl;
 
-import br.com.ifsc.aither.backend.autocomplete.DisciplinaAutoComplete;
+import br.com.ifsc.aither.backend.autocomplete.ConteudoAutoComplete;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DisciplinaAutoCompleteImpl implements DisciplinaAutoComplete {
+public class ConteudoAutoCompleteImpl implements ConteudoAutoComplete {
 
 	private Integer id;
 	
@@ -21,11 +21,11 @@ public class DisciplinaAutoCompleteImpl implements DisciplinaAutoComplete {
 		if (super.equals(obj)) {
             return true;
         }
-		if (!(obj instanceof DisciplinaAutoCompleteImpl)) {
+		if (!(obj instanceof ConteudoAutoCompleteImpl)) {
             return false;
         }
 
-		var other = (DisciplinaAutoCompleteImpl) obj;
+		var other = (ConteudoAutoCompleteImpl) obj;
 
         return id != null && id.equals(other.getId());
 	}

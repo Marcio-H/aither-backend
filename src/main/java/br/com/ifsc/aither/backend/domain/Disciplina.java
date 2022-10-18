@@ -45,7 +45,8 @@ public class Disciplina {
             return false;
         }
 
-        Disciplina other = (Disciplina) obj;
+        var other = (Disciplina) obj;
+
         return id != null && id.equals(other.getId());
     }
 

@@ -5,7 +5,7 @@ import br.com.ifsc.aither.backend.model.DisciplinaDTO;
 
 public interface DisciplinaMapper {
 
-	DisciplinaDTO convertDomainToDto(Disciplina entity);
+	DisciplinaDTO convertDomainToDto(Disciplina domain);
 
 	Disciplina convertDtoToDomain(DisciplinaDTO dto);
 }

@@ -16,30 +16,30 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import br.com.ifsc.aither.backend.autocomplete.DisciplinaAutoComplete;
-import br.com.ifsc.aither.backend.autocomplete.impl.DisciplinaAutoCompleteImpl;
-import br.com.ifsc.aither.backend.domain.Disciplina;
-import br.com.ifsc.aither.backend.domain.QDisciplina;
-import br.com.ifsc.aither.backend.repository.DisciplinaRepositoryCustom;
+import br.com.ifsc.aither.backend.autocomplete.ConteudoAutoComplete;
+import br.com.ifsc.aither.backend.autocomplete.impl.ConteudoAutoCompleteImpl;
+import br.com.ifsc.aither.backend.domain.Conteudo;
+import br.com.ifsc.aither.backend.domain.QConteudo;
+import br.com.ifsc.aither.backend.repository.ConteudoRepositoryCustom;
 
-public class DisciplinaRepositoryCustomImpl implements DisciplinaRepositoryCustom {
+public class ConteudoRepositoryCustomImpl implements ConteudoRepositoryCustom {
 
-	private static final QDisciplina QDOMAIN = QDisciplina.disciplina;
+	private static final QConteudo QDOMAIN = QConteudo.conteudo;
 
 	@PersistenceContext
 	private EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Page<DisciplinaAutoComplete> autoComplete(String query, Pageable pageable) {
+	public Page<ConteudoAutoComplete> autoComplete(String query, Pageable pageable) {
 		var jpaQueryFactory = new JPAQueryFactory(em);
 		var predicate = buildContextFilter(query);
-		Class<? extends DisciplinaAutoComplete> queryClass = DisciplinaAutoCompleteImpl.class;
+		Class<? extends ConteudoAutoComplete> queryClass = ConteudoAutoCompleteImpl.class;
 		var bean = Projections.bean(queryClass,
 				QDOMAIN.id,
 				QDOMAIN.descricao
 				);
-		var jpaQuery = (JPAQuery<DisciplinaAutoComplete>) jpaQueryFactory
+		var jpaQuery = (JPAQuery<ConteudoAutoComplete>) jpaQueryFactory
 				.select(bean)
 				.from(QDOMAIN)
 				.where(predicate)
@@ -52,7 +52,7 @@ public class DisciplinaRepositoryCustomImpl implements DisciplinaRepositoryCusto
 	}
 
 	@Override
-	public Page<Disciplina> findAll(String query, Pageable pageable) {
+	public Page<Conteudo> findAll(String query, Pageable pageable) {
 		var jpaQueryFactory = new JPAQueryFactory(em);
 		var predicate = buildContextFilter(query);
 		var jpaQuery = jpaQueryFactory
@@ -65,7 +65,7 @@ public class DisciplinaRepositoryCustomImpl implements DisciplinaRepositoryCusto
 
 		return new PageImpl<>(content);
 	}
-
+	
 	private BooleanBuilder buildContextFilter(String query) {
 		var predicate = new BooleanBuilder();
 
