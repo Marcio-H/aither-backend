@@ -2,6 +2,7 @@ package br.com.ifsc.aither.backend.domain;
 
 import static java.util.Objects.isNull;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,11 +28,13 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Papel {
+public class Papel implements Serializable {
 
 	public static final String ADMINISTRADOR = "ADMINISTRADOR";
 	public static final String PROFESSOR = "PROFESSOR";
 	public static final String ESTUDANTE = "ESTUDANTE";
+
+	private static final long serialVersionUID = -5298344948963128067L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

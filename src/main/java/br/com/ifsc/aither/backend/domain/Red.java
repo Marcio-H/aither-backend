@@ -1,20 +1,36 @@
 package br.com.ifsc.aither.backend.domain;
 
-import lombok.*;
-import org.hibernate.validator.constraints.URL;
+import static javax.persistence.FetchType.LAZY;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static javax.persistence.FetchType.LAZY;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@ToString
-@Getter
-@Setter
+import org.hibernate.validator.constraints.URL;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Data
+@Accessors(chain = true)
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Red {
@@ -54,7 +70,7 @@ public class Red {
             joinColumns = @JoinColumn(name = "red_id"),
             inverseJoinColumns = @JoinColumn(name = "disciplina_id"))
     @NotNull(message = "O campo disciplinas não pode ser nulo")
-    private Set<Disciplina> disciplinas = Set.of();
+    private Set<Disciplina> disciplinas = new HashSet<>();
 
     @ToString.Exclude
     @ManyToMany
@@ -64,20 +80,7 @@ public class Red {
             inverseJoinColumns = @JoinColumn(name = "conteudo_id"))
     @NotEmpty(message = "Conteúdos é obrigatório")
     @NotNull(message = "O campo conteúdos não pode ser nulo")
-    private Set<Conteudo> conteudos = Set.of();
-
-    @Builder
-    private Red(Integer id, String titulo, String descricao, String autor, byte[] imagem, String endereco, Usuario criadoPor, Set<Disciplina> disciplinas, Set<Conteudo> conteudos) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.autor = autor;
-        this.imagem = imagem;
-        this.endereco = endereco;
-        this.criadoPor = criadoPor;
-        this.conteudos = conteudos;
-        setDisciplinas(disciplinas);
-    }
+    private Set<Conteudo> conteudos =  new HashSet<>();
 
     public void setConteudos(Set<Conteudo> conteudos) {
         this.conteudos = conteudos;
@@ -101,6 +104,13 @@ public class Red {
         }
 
         Red other = (Red) obj;
+
         return id != null && id.equals(other.getId());
     }
+
+    @Override
+    public int hashCode() {
+    	return super.hashCode();
+    }
+   
 }

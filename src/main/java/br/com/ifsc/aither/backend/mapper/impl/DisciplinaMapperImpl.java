@@ -17,12 +17,12 @@ public class DisciplinaMapperImpl implements DisciplinaMapper {
 	private ObjectMapper mapper;
 
 	@Override
-	public DisciplinaDTO convertDomainToDto(Disciplina domain) {
+	public DisciplinaDTO convertDomainToDTO(Disciplina domain) {
 		return mapper.convertValue(domain, DisciplinaDTO.class);
 	}
 
 	@Override
-	public Disciplina convertDtoToDomain(DisciplinaDTO dto) {
+	public Disciplina convertDTOToDomain(DisciplinaDTO dto) {
 		return mapper.convertValue(dto, Disciplina.class);
 	}
 }

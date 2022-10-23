@@ -17,12 +17,12 @@ public class ConteudoMapperImpl implements ConteudoMapper {
 	private ObjectMapper mapper;
 
 	@Override
-	public ConteudoDTO convertDomainToDto(Conteudo domain) {
+	public ConteudoDTO convertDomainToDTO(Conteudo domain) {
 		return mapper.convertValue(domain, ConteudoDTO.class);
 	}
 
 	@Override
-	public Conteudo convertDtoToDomain(ConteudoDTO dto) {
+	public Conteudo convertDTOToDomain(ConteudoDTO dto) {
 		return mapper.convertValue(dto, Conteudo.class);
 	}
 }

@@ -1,15 +1,13 @@
 package br.com.ifsc.aither.backend.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.TypeDef;
-
-import com.vladmihalcea.hibernate.type.array.ListArrayType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +19,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@TypeDef(name = "list-array", typeClass = ListArrayType.class)
-public class Recurso {
+public class Recurso implements Serializable {
+
+	private static final long serialVersionUID = 494386011978556272L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

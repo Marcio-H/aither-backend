@@ -16,25 +16,25 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
 
 import br.com.ifsc.aither.backend.enums.DominioRecurso;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@ToString
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @IdClass(AutorizacaoId.class)
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Autorizacao {
 
 	@JsonIgnore

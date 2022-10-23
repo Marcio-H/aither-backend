@@ -26,10 +26,10 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	@Transactional
 	@Override
 	public DisciplinaDTO create(DisciplinaDTO disciplinaDTO) {
-		var domain = mapper.convertDtoToDomain(disciplinaDTO);
+		var domain = mapper.convertDTOToDomain(disciplinaDTO);
 		var created = repository.save(domain);
 
-		return mapper.convertDomainToDto(created);
+		return mapper.convertDomainToDTO(created);
 	}
 
 	@Transactional
@@ -37,16 +37,16 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	public DisciplinaDTO read(Integer id) {
 		var domain = repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Disciplina não encontrada"));
 
-		return mapper.convertDomainToDto(domain);
+		return mapper.convertDomainToDTO(domain);
 	}
 
 	@Transactional
 	@Override
 	public DisciplinaDTO update(DisciplinaDTO disciplinaDTO) {
-		var domain = mapper.convertDtoToDomain(disciplinaDTO);
+		var domain = mapper.convertDTOToDomain(disciplinaDTO);
 		var updated = repository.save(domain);
 
-		return mapper.convertDomainToDto(updated);
+		return mapper.convertDomainToDTO(updated);
 	}
 
 	@Transactional
@@ -60,7 +60,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	public Page<DisciplinaDTO> listAsDTO(String query, Pageable pageable) {
 		var page = repository.findAll(query, pageable);
 
-		return page.map(mapper::convertDomainToDto);
+		return page.map(mapper::convertDomainToDTO);
 	}
 
 	@Transactional

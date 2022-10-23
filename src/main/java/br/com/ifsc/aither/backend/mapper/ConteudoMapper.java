@@ -5,7 +5,6 @@ import br.com.ifsc.aither.backend.model.ConteudoDTO;
 
 public interface ConteudoMapper {
 
-	ConteudoDTO convertDomainToDto(Conteudo domain);
-
-	Conteudo convertDtoToDomain(ConteudoDTO dto);
+	ConteudoDTO convertDomainToDTO(Conteudo domain);
+	Conteudo convertDTOToDomain(ConteudoDTO dto);
 }

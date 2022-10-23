@@ -26,10 +26,10 @@ public class ConteudoServiceImpl implements ConteudoService {
 	@Transactional
 	@Override
 	public ConteudoDTO create(ConteudoDTO conteudoDTO) {
-		var domain = mapper.convertDtoToDomain(conteudoDTO);
+		var domain = mapper.convertDTOToDomain(conteudoDTO);
 		var created = repository.save(domain);
 
-		return mapper.convertDomainToDto(created);
+		return mapper.convertDomainToDTO(created);
 	}
 
 	@Transactional
@@ -37,16 +37,16 @@ public class ConteudoServiceImpl implements ConteudoService {
 	public ConteudoDTO read(Integer id) {
 		var domain = repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Conteúdo não encontrado"));
 
-		return mapper.convertDomainToDto(domain);
+		return mapper.convertDomainToDTO(domain);
 	}
 
 	@Transactional
 	@Override
 	public ConteudoDTO update(ConteudoDTO conteudoDTO) {
-		var domain = mapper.convertDtoToDomain(conteudoDTO);
+		var domain = mapper.convertDTOToDomain(conteudoDTO);
 		var updated = repository.save(domain);
 
-		return mapper.convertDomainToDto(updated);
+		return mapper.convertDomainToDTO(updated);
 	}
 
 	@Transactional
@@ -60,7 +60,7 @@ public class ConteudoServiceImpl implements ConteudoService {
 	public Page<ConteudoDTO> listAsDTO(String query, Pageable pageable) {
 		var page = repository.findAll(query, pageable);
 
-		return page.map(mapper::convertDomainToDto);
+		return page.map(mapper::convertDomainToDTO);
 	}
 
 	@Transactional

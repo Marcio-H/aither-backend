@@ -56,12 +56,14 @@ DECLARE
 	estudante_id INTEGER;
 	recurso_disciplina_id INTEGER;
 	recurso_conteudo_id INTEGER;
+	recurso_red_id INTEGER;
 BEGIN
     SELECT * INTO administrador_id FROM novo_papel('ADMINISTRADOR');
     SELECT * INTO professor_id FROM novo_papel('PROFESSOR');
     SELECT * INTO estudante_id FROM novo_papel('ESTUDANTE');
     SELECT * INTO recurso_disciplina_id FROM novo_recurso('urn:resource:disciplina');
     SELECT * INTO recurso_conteudo_id FROM novo_recurso('urn:resource:conteudo');
+    SELECT * INTO recurso_red_id FROM novo_recurso('urn:resource:red');
 
     CALL autoriza_papel_recurso(administrador_id, recurso_disciplina_id, ARRAY['LER', 'CRIAR', 'REMOVER', 'ATUALIZAR']);
     CALL autoriza_papel_recurso(professor_id, recurso_disciplina_id, ARRAY['LER', 'CRIAR', 'REMOVER', 'ATUALIZAR']);
@@ -70,6 +72,10 @@ BEGIN
     CALL autoriza_papel_recurso(administrador_id, recurso_conteudo_id, ARRAY['LER', 'CRIAR', 'REMOVER', 'ATUALIZAR']);
     CALL autoriza_papel_recurso(professor_id, recurso_conteudo_id, ARRAY['LER', 'CRIAR', 'REMOVER', 'ATUALIZAR']);
     CALL autoriza_papel_recurso(estudante_id, recurso_conteudo_id, ARRAY['LER', 'CRIAR']);
+
+    CALL autoriza_papel_recurso(administrador_id, recurso_red_id, ARRAY['LER', 'CRIAR', 'REMOVER', 'ATUALIZAR']);
+    CALL autoriza_papel_recurso(professor_id, recurso_red_id, ARRAY['LER', 'CRIAR', 'REMOVER', 'ATUALIZAR']);
+    CALL autoriza_papel_recurso(estudante_id, recurso_red_id, ARRAY['LER', 'CRIAR']);
 
     CALL novo_usuario('${usuario.admin.username}', '${usuario.admin.password}', '${usuario.admin.name}', administrador_id);
 END

@@ -1,5 +1,7 @@
 package br.com.ifsc.aither.backend.autocomplete;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -13,7 +15,11 @@ public interface ConteudoAutoComplete {
 
 	String getDescricao();
 
+	Set<DisciplinaAutoComplete> getDisciplinas();
+
 	void setId(Integer id);
 
 	void setDescricao(String descricao);
+
+	void setDisciplinas(Set<DisciplinaAutoComplete> disciplinas);
 }
