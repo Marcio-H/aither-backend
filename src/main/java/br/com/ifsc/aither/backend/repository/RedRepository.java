@@ -1,7 +1,9 @@
 package br.com.ifsc.aither.backend.repository;
 
-import br.com.ifsc.aither.backend.domain.Red;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface RedRepository extends JpaRepository<Red, Integer>, RedRepositoryCustom {
+import br.com.ifsc.aither.backend.domain.Red;
+
+public interface RedRepository extends JpaRepository<Red, Integer>, QuerydslPredicateExecutor<Red> {
 }

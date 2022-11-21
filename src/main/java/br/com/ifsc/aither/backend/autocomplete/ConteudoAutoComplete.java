@@ -22,4 +22,6 @@ public interface ConteudoAutoComplete {
 	void setDescricao(String descricao);
 
 	void setDisciplinas(Set<DisciplinaAutoComplete> disciplinas);
+
+	void addDisciplina(DisciplinaAutoComplete disciplina);
 }

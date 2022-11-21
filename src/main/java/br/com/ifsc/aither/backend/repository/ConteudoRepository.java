@@ -1,7 +1,9 @@
 package br.com.ifsc.aither.backend.repository;
 
-import br.com.ifsc.aither.backend.domain.Conteudo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface ConteudoRepository extends JpaRepository<Conteudo, Integer>, ConteudoRepositoryCustom {
+import br.com.ifsc.aither.backend.domain.Conteudo;
+
+public interface ConteudoRepository extends JpaRepository<Conteudo, Integer>, QuerydslPredicateExecutor<Conteudo> {
 }

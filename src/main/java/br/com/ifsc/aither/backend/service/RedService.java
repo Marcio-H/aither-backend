@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import br.com.ifsc.aither.backend.autocomplete.RedAutoComplete;
+import br.com.ifsc.aither.backend.model.RecRedMainPage;
 import br.com.ifsc.aither.backend.model.RedDTO;
 
 public interface RedService {
@@ -14,4 +15,5 @@ public interface RedService {
 	void delete(Integer id);
 	Page<RedDTO> listAsDTO(String query, Pageable pageable);
 	Page<RedAutoComplete> autoComplete(String query, Pageable pageable);
+	Page<RecRedMainPage> mainPage(String query, Pageable pageable);
 }

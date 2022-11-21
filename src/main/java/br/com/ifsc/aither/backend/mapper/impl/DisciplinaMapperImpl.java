@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.ifsc.aither.backend.autocomplete.DisciplinaAutoComplete;
 import br.com.ifsc.aither.backend.domain.Disciplina;
 import br.com.ifsc.aither.backend.mapper.DisciplinaMapper;
 import br.com.ifsc.aither.backend.model.DisciplinaDTO;
@@ -24,5 +25,10 @@ public class DisciplinaMapperImpl implements DisciplinaMapper {
 	@Override
 	public Disciplina convertDTOToDomain(DisciplinaDTO dto) {
 		return mapper.convertValue(dto, Disciplina.class);
+	}
+
+	@Override
+	public DisciplinaAutoComplete convertDomainToAutoComplete(Disciplina domain) {
+		return mapper.convertValue(domain, DisciplinaAutoComplete.class);
 	}
 }

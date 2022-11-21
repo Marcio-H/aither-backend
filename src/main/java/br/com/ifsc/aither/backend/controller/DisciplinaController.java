@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsc.aither.backend.annotations.VerificarPermissaoAtualizar;
@@ -73,7 +72,7 @@ public class DisciplinaController {
 	}
 
 	@GetMapping("/autoComplete")
-	public Page<DisciplinaAutoComplete> autoComplete(@RequestParam("query") String query, Pageable pageable) {
+	public Page<DisciplinaAutoComplete> autoComplete(String query, Pageable pageable) {
 		return service.autoComplete(query, pageable);
 	}
 

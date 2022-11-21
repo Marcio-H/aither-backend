@@ -1,5 +1,9 @@
 package br.com.ifsc.aither.backend.service.impl;
 
+import static br.com.ifsc.aither.backend.utils.DataBaseConstants.FUNCTION_UNACCENT;
+import static com.querydsl.core.types.dsl.Expressions.stringTemplate;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -7,7 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
+
 import br.com.ifsc.aither.backend.autocomplete.DisciplinaAutoComplete;
+import br.com.ifsc.aither.backend.domain.QDisciplina;
 import br.com.ifsc.aither.backend.exceptions.RecordNotFoundException;
 import br.com.ifsc.aither.backend.mapper.DisciplinaMapper;
 import br.com.ifsc.aither.backend.model.DisciplinaDTO;
@@ -16,6 +23,8 @@ import br.com.ifsc.aither.backend.service.DisciplinaService;
 
 @Service
 public class DisciplinaServiceImpl implements DisciplinaService {
+
+	private static final QDisciplina DISCIPLINA = QDisciplina.disciplina;
 
 	@Inject
 	private DisciplinaRepository repository;
@@ -58,7 +67,7 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	@Transactional
 	@Override
 	public Page<DisciplinaDTO> listAsDTO(String query, Pageable pageable) {
-		var page = repository.findAll(query, pageable);
+		var page = repository.findAll(buildContextFilter(query), pageable);
 
 		return page.map(mapper::convertDomainToDTO);
 	}
@@ -66,6 +75,22 @@ public class DisciplinaServiceImpl implements DisciplinaService {
 	@Transactional
 	@Override
 	public Page<DisciplinaAutoComplete> autoComplete(String query, Pageable pageable) {
-		return repository.autoComplete(query, pageable);
+		var page = repository.findAll(buildContextFilter(query), pageable);
+
+		return page.map(mapper::convertDomainToAutoComplete);
+	}
+
+	private BooleanBuilder buildContextFilter(String query) {
+		var predicate = new BooleanBuilder();
+
+		if(isBlank(query)) {
+			return predicate;
+		}
+
+		var queryExpression = stringTemplate(FUNCTION_UNACCENT, query);
+		var descricaoExpression = stringTemplate(FUNCTION_UNACCENT, DISCIPLINA.descricao);
+
+		predicate.or(descricaoExpression.containsIgnoreCase(queryExpression));
+		return predicate;
 	}
 }

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +28,7 @@ import br.com.ifsc.aither.backend.annotations.VerificarPermissaoAtualizar;
 import br.com.ifsc.aither.backend.annotations.VerificarPermissaoCriar;
 import br.com.ifsc.aither.backend.annotations.VerificarPermissaoRemover;
 import br.com.ifsc.aither.backend.autocomplete.RedAutoComplete;
+import br.com.ifsc.aither.backend.model.RecRedMainPage;
 import br.com.ifsc.aither.backend.model.RedDTO;
 import br.com.ifsc.aither.backend.service.RedService;
 
@@ -87,8 +87,13 @@ public class RedController {
 	}
 
 	@GetMapping("/autoComplete")
-	public Page<RedAutoComplete> autoComplete(@RequestParam("query") String query, Pageable pageable) {
+	public Page<RedAutoComplete> autoComplete(String query, Pageable pageable) {
 		return service.autoComplete(query, pageable);
+	}
+
+	@GetMapping("/mainPage")
+	public Page<RecRedMainPage> mainPage(String query, Pageable pageable) {
+		return service.mainPage(query, pageable);
 	}
 
 	public String getResource() {
