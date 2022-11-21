@@ -1,4 +1,4 @@
-CREATE EXTENSION IF NOT EXISTS unaccent schema public;
+CREATE EXTENSION IF NOT EXISTS unaccent;
 
 CREATE TABLE usuario (
     id SERIAL,
